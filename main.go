@@ -17,7 +17,7 @@ func main() {
 	})
 	db := config.NewDB()
 	router.JabatanRouter(db, app)
-	if err := app.Listen(":3000"); err != nil {
+	if err := app.Listen(":3001"); err != nil {
 		log.Fatalln(err)
 	}
 }

@@ -21,6 +21,6 @@ func JabatanRouter(db *sql.DB, base *fiber.App) {
 	root.Get("/:id_jabatan", JabatanController.FindByID)
 	root.Post("/", JabatanController.Create)
 	root.Put("/:id_jabatan", JabatanController.Update)
-	root.Put("/profil/:id_jabatan", JabatanController.Upload)
+	root.Put("/profil/:id_jabatah", JabatanController.Upload)
 	root.Delete("/:id_jabatan", JabatanController.Delete)
 }
