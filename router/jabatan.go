@@ -16,7 +16,7 @@ func JabatanRouter(db *sql.DB, base *fiber.App) {
 		JabatanController controller.JabatanController = controller.NewJabatanController(JabatanService)
 	)
 
-	root := base.Group("/Jabatdtdtdtdgdfdgdfgan")
+	root := base.Group("/Jabatan")
 	root.Get("/", JabatanController.All)
 	root.Get("/:id_jabatan", JabatanController.FindByID)
 	root.Post("/", JabatanController.Create)
