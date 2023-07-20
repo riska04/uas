@@ -1,6 +1,8 @@
 package response
 
+import "materi/helper"
+
 type JabatanResponse struct {
-	IdJabatan string `json:"id_jabatan"`
-	NamaJabatan string `json:"nama_jabatan"`
+	IdJabatan   helper.NullString `json:"id_jabatan"`
+	NamaJabatan helper.NullString `json:"nama_jabatan"`
 }

@@ -1,8 +1,6 @@
 package request
 
-import (
-	"github.com/go-playground/validator/v10"
-)
+import "github.com/go-playground/validator/v10"
 
 type JabatanCreate struct {
 	NamaJabatan string `json:"nama_jabatan" form:"nama_jabatan" validate:"required"`
@@ -11,6 +9,10 @@ type JabatanCreate struct {
 type JabatanUpdate struct {
 	IdJabatan   string `json:"id_jabatan"`
 	NamaJabatan string `json:"nama_jabatan" form:"nama_jabatan" validate:"required"`
+}
+
+type JabatanProfile struct {
+	IdJabatan string `json:"id_jabatan"`
 }
 
 type ErrorResponse struct {

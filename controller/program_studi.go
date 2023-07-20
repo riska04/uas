@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type JabatanController interface {
+type ProgramStudiController interface {
 	All(context *fiber.Ctx) error
 	FindByID(context *fiber.Ctx) error
 	Create(context *fiber.Ctx) error
@@ -19,25 +19,25 @@ type JabatanController interface {
 	Upload(context *fiber.Ctx) error
 }
 
-type jabatanController struct {
-	jabatanService service.JabatanService
+type programstudiController struct {
+	programstudiService service.ProgramStudiService
 }
 
-// All implements JabatanController.
-func (c *jabatanController) All(context *fiber.Ctx) error {
-	jabatan, err := c.jabatanService.All(context.Context())
+// All implements ProgramStudiController.
+func (c *programstudiController) All(context *fiber.Ctx) error {
+	programstudi, err := c.programstudiService.All(context.Context())
 
 	if err != nil {
 		response := helper.APIResponse("Failed to get data", http.StatusBadRequest, "error", err.Error())
 		return context.Status(http.StatusBadRequest).JSON(response)
 	}
-	response := helper.APIResponse("Success to get data", http.StatusOK, "success", jabatan)
+	response := helper.APIResponse("Success to get data", http.StatusOK, "success", programstudi)
 	return context.Status(http.StatusOK).JSON(response)
 }
 
-// Create implements JabatanController.
-func (c *jabatanController) Create(context *fiber.Ctx) error {
-	var inputData request.JabatanCreate
+// Create implements ProgramStudiController.
+func (c *programstudiController) Create(context *fiber.Ctx) error {
+	var inputData request.ProgramStudiCreate
 	if err := context.BodyParser(&inputData); err != nil {
 		response := helper.APIResponse("Failed to post data", http.StatusBadRequest, "error", err.Error())
 		return context.Status(http.StatusBadRequest).JSON(response)
@@ -48,7 +48,7 @@ func (c *jabatanController) Create(context *fiber.Ctx) error {
 		return context.Status(http.StatusBadRequest).JSON(response)
 	}
 
-	_, err := c.jabatanService.Create(context.Context(), inputData)
+	_, err := c.programstudiService.Create(context.Context(), inputData)
 	if err != nil {
 		response := helper.APIResponse("Failed to post data", http.StatusBadRequest, "error", err.Error())
 		return context.Status(http.StatusBadRequest).JSON(response)
@@ -57,52 +57,52 @@ func (c *jabatanController) Create(context *fiber.Ctx) error {
 	return context.Status(http.StatusOK).JSON(response)
 }
 
-// Delete implements JabatanController.
-func (c *jabatanController) Delete(context *fiber.Ctx) error {
-	id, err := strconv.Atoi(context.Params("id_jabatan"))
+// Delete implements ProgramStudiController.
+func (c *programstudiController) Delete(context *fiber.Ctx) error {
+	id, err := strconv.Atoi(context.Params("id_program_studi"))
 	if err != nil {
 		response := helper.APIResponse("Failed to get data", http.StatusBadRequest, "error", err.Error())
 		return context.Status(http.StatusBadRequest).JSON(response)
 
 	}
-	c.jabatanService.Delete(context.Context(), strconv.Itoa(id))
+	c.programstudiService.Delete(context.Context(), strconv.Itoa(id))
 	response := helper.APIResponse("Success to delete data", http.StatusOK, "success", nil)
 	return context.Status(http.StatusOK).JSON(response)
 }
 
-// FindByID implements JabatanController.
-func (c *jabatanController) FindByID(context *fiber.Ctx) error {
-	id, err := strconv.Atoi(context.Params("id_jabatan"))
+// FindByID implements ProgramStudiController.
+func (c *programstudiController) FindByID(context *fiber.Ctx) error {
+	id, err := strconv.Atoi(context.Params("id_programstudi"))
 	if err != nil {
 		response := helper.APIResponse("Failed to get data", http.StatusBadRequest, "error", err.Error())
 		return context.Status(http.StatusBadRequest).JSON(response)
 
 	}
-	jabatan, err := c.jabatanService.FindByID(context.Context(), strconv.Itoa(id))
+	programstudi, err := c.programstudiService.FindByID(context.Context(), strconv.Itoa(id))
 
 	if err != nil {
 		response := helper.APIResponse("Failed to get data", http.StatusBadRequest, "error", err.Error())
 		return context.Status(http.StatusBadRequest).JSON(response)
 	}
 
-	response := helper.APIResponse("Success to get data", http.StatusOK, "success", jabatan)
+	response := helper.APIResponse("Success to get data", http.StatusOK, "success", programstudi)
 	return context.Status(http.StatusOK).JSON(response)
 }
 
-// Update implements JabatanController.
-func (c *jabatanController) Update(context *fiber.Ctx) error {
-	id, err := strconv.Atoi(context.Params("id_jabatan"))
+// Update implements ProgramStudiController.
+func (c *programstudiController) Update(context *fiber.Ctx) error {
+	id, err := strconv.Atoi(context.Params("id_program_studi"))
 	if err != nil {
 		response := helper.APIResponse("Failed to put data", http.StatusBadRequest, "error", err.Error())
 		return context.Status(http.StatusBadRequest).JSON(response)
 	}
-	var inputData request.JabatanUpdate
+	var inputData request.ProgramStudiUpdate
 
 	if err := context.BodyParser(&inputData); err != nil {
 		response := helper.APIResponse("Failed to put data", http.StatusBadRequest, "error", err.Error())
 		return context.Status(http.StatusBadRequest).JSON(response)
 	}
-	inputData.IdJabatan = strconv.Itoa(id)
+	inputData.ProgramStudi = strconv.Itoa(id)
 
 	errors := request.ValidateStruct(&inputData)
 	if errors != nil {
@@ -110,7 +110,7 @@ func (c *jabatanController) Update(context *fiber.Ctx) error {
 		return context.Status(http.StatusBadRequest).JSON(response)
 	}
 
-	if err := c.jabatanService.Update(context.Context(), inputData); err != nil {
+	if err := c.programstudiService.Update(context.Context(), inputData); err != nil {
 		response := helper.APIResponse("Failed to put data", http.StatusBadRequest, "error", err.Error())
 		return context.Status(http.StatusBadRequest).JSON(response)
 	}
@@ -118,13 +118,13 @@ func (c *jabatanController) Update(context *fiber.Ctx) error {
 	return context.Status(http.StatusOK).JSON(response)
 }
 
-// Upload implements JabatanController.
-func (c *jabatanController) Upload(context *fiber.Ctx) error {
+// Upload implements ProgramStudiController.
+func (*programstudiController) Upload(context *fiber.Ctx) error {
 	panic("unimplemented")
 }
 
-func NewJabatanController(jabatanService service.JabatanService) JabatanController {
-	return &jabatanController{
-		jabatanService: jabatanService,
+func NewProgramStudiController(programstudiService service.ProgramStudiService) ProgramStudiController {
+	return &programstudiController{
+		programstudiService: programstudiService,
 	}
 }

@@ -17,7 +17,17 @@ func main() {
 	})
 	db := config.NewDB()
 	router.JabatanRouter(db, app)
-	if err := app.Listen(":3045453400"); err != nil {
+	router.AbsenRouter(db, app)
+	router.BerkasRouter(db, app)
+	router.FakultasRouter(db, app)
+	router.LembagaRouter(db, app)
+	router.NotulenRouter(db, app)
+	router.ProgramStudiRouter(db, app)
+	router.StrukturRouter(db, app)
+	router.UndanganRouter(db, app)
+	router.UnitRouter(db, app)
+	router.UserRouter(db, app)
+	if err := app.Listen(":3000"); err != nil {
 		log.Fatalln(err)
 	}
 }

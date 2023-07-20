@@ -8,7 +8,7 @@ import (
 )
 
 func NewDB() *sql.DB {
-	db, err := sql.Open("mysql", "root:@tcp(localhost:3306)/suratt?collation=utf8mb4_unicode_ci")
+	db, err := sql.Open("mysql", "root:@tcp(localhost:3306)/surat?collation=utf8mb4_unicode_ci")
 	if err != nil {
 		panic(err)
 	}
